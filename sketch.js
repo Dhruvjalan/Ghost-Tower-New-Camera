@@ -1,6 +1,6 @@
 var ghost, ghostimage,ghost2image, tower, towerimage, towerimage2, tower2, climberimage, climber, climberGroup, doorGroup, doorimage, door, invisiblesprite, invisiblegroup;
 var gameState, PLAY = 1, END = 0,y= 600;
-var x, MOVE=1, STOP = 2,T1 = 1, T2 = 2;
+var x;
 function preload(){
   ghostimage = loadImage("ghost-jumping.png");
   ghost2image = loadImage("ghost-standing.png");
@@ -17,34 +17,25 @@ function setup(){
   camera.position.x = 300;
   tower = createSprite(300,300,600,600);
   tower.addImage(towerimage);
-  //tower.velocityY = 4.3
   tower2 = createSprite(300,-600,600,600);
   tower2.addImage(towerimage);
-  //tower2.velocityY = 0
   ghost = createSprite(300,300,20,20);
   ghost.addImage(ghostimage);
   ghost.scale = 0.5;
-    ghost.velocityY = ghost.velocityY+0.7;
+  ghost.velocityY = ghost.velocityY+0.7;
   
   gameState = PLAY;
   climberGroup = new Group();
   doorGroup = new Group();
   invisibleGroup = new Group();
-  MOVE = 1
   
   
 }
 function draw(){
   background("black");
 
-ghost.y = ghost.y+0.7
-//console.log(ghost.y);
-ghost.y = camera.position.y;
-ghost.x = 10
-
-//camera.position.y = ghost.y
-tower2.visible = false
-console.log("1: "+(tower.y - camera.position.y), "2: "+ (tower2.y - camera.position.y)  )
+ ghost.y = ghost.y+0.7
+ tower2.visible = false
 
  
   
@@ -53,7 +44,6 @@ console.log("1: "+(tower.y - camera.position.y), "2: "+ (tower2.y - camera.posit
   if(gameState === PLAY){
     x = 1;
     ghost.velocityY = ghost.velocityY+0.7;
-   //tower.y = ghost.y
     
     
     if(keyDown(LEFT_ARROW)){
@@ -91,7 +81,7 @@ console.log("1: "+(tower.y - camera.position.y), "2: "+ (tower2.y - camera.posit
     drawSprites();
   }else if(gameState === END){
     textSize(28);
-   text("Game Over", camera.position.x - 30,camera.position.y - 30);
+    text("Game Over", camera.position.x - 30,camera.position.y - 30);
     text("Hit r to restart", camera.position.x,camera.position.y);
        
     
@@ -99,14 +89,12 @@ console.log("1: "+(tower.y - camera.position.y), "2: "+ (tower2.y - camera.posit
    if(keyDown("r") && gameState === END){
   x = 0
   location.reload()
-      gameState = PLAY;
-        ghost = createSprite(300,300,20,20);
+  gameState = PLAY;
+  ghost = createSprite(300,300,20,20);
   ghost.addImage(ghostimage);
   ghost.scale = 0.5;
    }
   if(x ===0){
-   
-    
     ghost.velocityY = ghost.velocityY+0.7;
   }
 
@@ -116,12 +104,10 @@ console.log("1: "+(tower.y - camera.position.y), "2: "+ (tower2.y - camera.posit
 function spawnclimber(){
   climber = createSprite(300, ghost.y-300, 10,10);
   climber.x = Math.round(random(250,500));
-  //console.log(climber.x);
   climber.addImage(climberimage);
   climber.velocityY = 5
   climber.depth = ghost.depth-1;
   climberGroup.add(climber);
- // climber.lifetime = 600/5;
   invisiblesprite = createSprite(climber.x,climber.y+4,80,10);
   invisiblesprite.velocityY = 5;
   invisiblesprite.visible = false;
@@ -132,7 +118,7 @@ function spawnclimber(){
   door.x = climber.x ;
   door.depth = climber.depth;
   doorGroup.add(door);
- doorGroup.lifetime = 600/5;
+  doorGroup.lifetime = 600/5;
   
 }
 
